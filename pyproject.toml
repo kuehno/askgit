@@ -1,0 +1,71 @@
+[project]
+name = "askgit"
+version = "0.1.0"
+description = "Tool for indexing/embedding github repositories to a local postgres/pgvector db for search/retrieval"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "alembic>=1.16.5",
+    "litellm>=1.78.2",
+    "loguru>=0.7.3",
+    "pgvector>=0.4.1",
+    "psycopg>=3.2.10",
+    "psycopg2-binary>=2.9.10",
+    "pydantic-settings>=2.11.0",
+    "pytz>=2025.2",
+    "setuptools>=80.9.0",
+    "sqlalchemy>=2.0.43",
+    "sqlmodel>=0.0.27",
+    "aiobotocore>=2.25.0",
+    "boto3>=1.40.49",
+    "semchunk>=3.2.3",
+    "nbformat>=5.10.4",
+    "llama-index-core>=0.14.5",
+    "tree-sitter>=0.25.2",
+    "tree-sitter-python>=0.25.0",
+    "tree-sitter-language-pack>=0.10.0",
+    "tree-sitter-javascript>=0.25.0",
+    "astchunk>=0.1.0",
+    "agno>=2.2.0",
+    "fastmcp>=2.12.5",
+]
+
+[project.scripts]
+scrape-github = "askgit.cli.scrape_github:main"
+
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.uv]
+default-groups = []
+package = true
+
+[tool.ruff]
+target-version = "py313"
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+    "ARG001", # unused arguments in functions
+]
+ignore = [
+    "E501",  # line too long, handled by black
+    "B008",  # do not perform function calls in argument defaults
+    "W191",  # indentation contains tabs
+    "B904",  # Allow raising exceptions without from e, for HTTPException
+    "ARG001", # unused arguments in functions
+]
+
+[tool.ruff.lint.pyupgrade]
+# Preserve types, even if a file imports `from __future__ import annotations`.
+keep-runtime-typing = true
+
+[tool.setuptools.packages.find]
+where = ["src", "askgit"]

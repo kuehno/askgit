@@ -1,0 +1,53 @@
+---
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.12.7
+    hooks:
+      - id: ruff-check
+        types_or: [python, pyi]
+        args: [--fix]
+      - id: ruff-format
+        types_or: [python, pyi]
+
+  - repo: https://github.com/awslabs/git-secrets
+    rev: 99d01d58ebcc06e237c0e3f3ff5ae628aeef6aa6
+    hooks:
+      - id: git-secrets
+        entry: git-secrets --scan
+        files: .
+        args: [--untracked]
+
+  - repo: https://github.com/zricethezav/gitleaks
+    rev: v8.28.0
+    hooks:
+      - id: gitleaks
+        name: Detect hardcoded secrets
+        description: Detect hardcoded secrets using Gitleaks
+        entry: gitleaks protect
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-added-large-files
+        args: [--maxkb=1024]
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-docstring-first
+      - id: check-json
+      - id: check-yaml
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: check-vcs-permalinks
+      - id: destroyed-symlinks
+      - id: detect-private-key
+      - id: fix-byte-order-marker
+      - id: mixed-line-ending
+        args: [--fix=lf]
+      - id: trailing-whitespace
+      - id: debug-statements
+
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    # uv version.
+    rev: 0.8.15
+    hooks:
+      - id: uv-lock
